@@ -1,5 +1,7 @@
+import slider from 'vue3-slider';
+
 export default {
   install(app) {
-    // #TODO: Register components here
-  }
-}
+    app.component('slider', slider);
+  },
+};
