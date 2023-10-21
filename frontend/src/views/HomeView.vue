@@ -1,6 +1,6 @@
 <template>
   <div class="w-screen h-screen flex justify-center items-center">
-    <TerminalWindow :isClosable="false" title="computer-graphics@labs">
+    <TerminalWindow :isClosable="false" title="computer-graphics@labs" isTransparent>
       <template #content>
         <TerminalText :user="username" :text="'Hello World!'" />
         <TerminalText

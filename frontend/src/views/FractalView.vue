@@ -1,9 +1,13 @@
 <template>
   <div class="w-screen h-screen flex justify-center items-center">
-    <ProgramWindow title="Lab 2 - Fractals" :isClosable="false">
+    <ProgramWindow
+      title="Lab 2 - Fractals"
+      :isClosable="false"
+      :transparentHeader="visibleModal.length > 0"
+    >
       <template #content>
         <div class="flex flex-row justify-center items-start w-full gap-4">
-          <ProgramMenu @onBackClick="goBack" />
+          <ProgramMenu @onBackClick="goBack" @onLinkClick="onLinkClick" />
           <div class="w-full">
             <Fractals />
             <div class="pt-2">
@@ -42,6 +46,37 @@
       </template>
     </ProgramWindow>
   </div>
+  <div
+    class="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center"
+    v-if="visibleModal.length > 0"
+  >
+    <AssignmentList
+      v-if="visibleModal === 'ai'"
+      :name="modalsContent.assignmentIfno.name"
+      :goal="modalsContent.assignmentIfno.goal"
+      :step-list="modalsContent.assignmentIfno.stepList"
+      @onCloseClick="onCloseClick"
+      class="ml-20 -mt-4"
+    />
+    <ReadingList
+      v-if="visibleModal === 'rl'"
+      :text1="modalsContent.readingList.text1"
+      :text2="modalsContent.readingList.text2"
+      :text3="modalsContent.readingList.text3"
+      :links="modalsContent.readingList.links"
+      @onCloseClick="onCloseClick"
+      class="ml-20 mt-8"
+    />
+    <WatchingList
+      v-if="visibleModal === 'wl'"
+      :text1="modalsContent.watchingList.text1"
+      :text2="modalsContent.watchingList.text2"
+      :text3="modalsContent.watchingList.text3"
+      :links="modalsContent.watchingList.links"
+      @onCloseClick="onCloseClick"
+      class="ml-20 mt-8"
+    />
+  </div>
 </template>
 
 <script>
@@ -51,6 +86,9 @@ import SelectInput from '../components/atoms/inputs/SelectInput.vue';
 import SliderInput from '../components/atoms/inputs/SliderInput.vue';
 import Fractals from '../components/general/Fractals.vue';
 import ProgramMenu from '../components/general/ProgramMenu.vue';
+import AssignmentList from '../components/general/lists/AssignmentList.vue';
+import ReadingList from '../components/general/lists/ReadingList.vue';
+import WatchingList from '../components/general/lists/WatchingList.vue';
 import ProgramWindow from '../components/general/windows/ProgramWindow.vue';
 import SaveIcon from '../components/icons/SaveIcon.vue';
 
@@ -65,12 +103,16 @@ export default {
     SelectInput,
     ActionButton,
     SaveIcon,
+    AssignmentList,
+    WatchingList,
+    ReadingList,
   },
   data() {
     return {
       schema: {
         constant: 'required|min_value:1|max_value:9999',
       },
+      visibleModal: '',
       options: [
         {
           label: 'Red & Black',
@@ -85,6 +127,65 @@ export default {
           code: 'gp',
         },
       ],
+      modalsContent: {
+        assignmentIfno: {
+          name: 'Lab 2. Build fractal for Lab 2',
+          goal: 'To have the best fractal at the world   ',
+          stepList: [
+            'Build frontend',
+            'Build backend',
+            'Vizualize fractal',
+            'Prepare the best report',
+            'Get max mark',
+          ],
+        },
+        readingList: {
+          text1: 'Here we go again! It is never too late to study new staff.',
+          text2:
+            'This is a page, that will help you to get familiar with all the theoretic data you need to understand the task.',
+          text3: 'Please select the link you want to open:',
+          links: [
+            {
+              title: 'Fractals',
+              url: '#',
+              description:
+                'This page contains general data what fractals are and where can them be useful.',
+            },
+            {
+              title: 'Math',
+              url: '#',
+              description:
+                'This page contains data about basic math knowledge required to understand what is going on here',
+            },
+            {
+              title: 'Code',
+              url: '#',
+              description:
+                'This page contains data about technologies used to build such a great fractal :)',
+            },
+          ],
+        },
+        watchingList: {
+          text1: 'It is never too late to study. But let’s now do it another way!',
+          text2:
+            'This is a page, that will help you to get familiar with all the theoretic data you need to understand the task by watching and listening to it.',
+          text3: 'Please select the link you want to open:',
+          links: [
+            {
+              title: 'Intro to Computer Graphics',
+              url: '#',
+            },
+            {
+              title: 'Intro to Fractals Theory',
+              url: '#',
+            },
+            {
+              title: 'Intro to Fractals Vizualization',
+              url: '#',
+            },
+          ],
+        },
+      },
     };
   },
   methods: {
@@ -93,6 +194,12 @@ export default {
     },
     onSubmit(values) {
       console.log(values);
+    },
+    onLinkClick(type) {
+      this.visibleModal = type;
+    },
+    onCloseClick() {
+      this.visibleModal = '';
     },
   },
 };
