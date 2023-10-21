@@ -7,6 +7,7 @@
         v-for="link in menuItems"
         :key="link.type"
         class="flex flex-row justify-start items-center gap-2 cursor-pointer"
+        @click="linkClick(link.type)"
       >
         <div class="w-5 h-5 pt-0.5">
           <component :is="{ ...link.icon }" />
@@ -52,6 +53,9 @@ export default {
   methods: {
     onBackBtnClick() {
       this.$emit('onBackClick');
+    },
+    linkClick(type) {
+      this.$emit('onLinkClick', type);
     },
   },
 };

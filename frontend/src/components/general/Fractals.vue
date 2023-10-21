@@ -7,6 +7,11 @@
         <span class="font-light underline underline-offset-2">Mandelbrot</span>
       </div>
       <div
+        class="border border-l-0 border-b-0 border-solid border-stroke bg-white cursor-pointer px-4 py-0.5 hover:text-white hover:bg-primary"
+      >
+        <span class="font-light underline underline-offset-2">Vicsek</span>
+      </div>
+      <div
         class="border border-l-0 border-b-0 border-solid border-stroke rounded-tr-md bg-white cursor-pointer px-4 py-0.5 hover:text-white hover:bg-primary"
       >
         <span class="font-light underline underline-offset-2">Zhulin</span>
@@ -26,6 +31,6 @@ export default {
 </script>
 <style scoped lang="scss">
 .fractal-image {
-  height: 424px;
+  height: 446px;
 }
 </style>

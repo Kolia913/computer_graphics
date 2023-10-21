@@ -12,6 +12,7 @@ export default {
   min-width: 193px;
   --vs-controls-color: #b8b8b8;
   --vs-border-color: #b8b8b8;
+  --vs-border-radius: 6px;
 
   --vs-dropdown-bg: #fff;
   --vs-dropdown-color: #d9d9d9;
