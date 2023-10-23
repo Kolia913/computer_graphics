@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, send_file
 from matplotlib import pyplot as plt
 
-from fractals import mandelbrot, julia, utils
+from fractals import mandelbrot, julia, vicsek, utils
 
 app = Flask(__name__)
 
@@ -97,6 +97,39 @@ def julia_fractal():
             as_attachment=True,
             mimetype="image/png",
             download_name="julia.png",
+        )
+
+    return send_file(img, mimetype="image/png")
+
+
+# add timeout
+
+
+@app.route("/api/vicsek", methods=["POST"])
+def vicsek_fractal():
+    data = request.get_json()
+
+    try:
+        levels = int(data["levels"])
+    except (ValueError, KeyError):
+        return jsonify({"error": "Invalid levels value."}), 400
+
+    if not 0 < levels < 5:
+        return jsonify({"error": "Levels value must be between 0 and 5."}), 400
+
+    save_to_file = data.get("save_to_file", False)
+
+    print("Generating vicsek fractal...")
+    fig = vicsek.get_vicsek_fractal(levels)
+    print("Converting vicsek fractal to image...")
+    img = utils.convert_figure_to_image(fig)
+
+    if save_to_file:
+        return send_file(
+            img,
+            as_attachment=True,
+            mimetype="image/png",
+            download_name="vicsek.png",
         )
 
     return send_file(img, mimetype="image/png")

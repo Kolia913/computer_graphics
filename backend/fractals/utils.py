@@ -1,3 +1,4 @@
+from matplotlib.transforms import Bbox
 import numpy as np
 import io
 import matplotlib.pyplot as plt
@@ -27,5 +28,24 @@ def convert_set_to_image(
 
     img_byte_array = io.BytesIO()
     plt.savefig(img_byte_array, format="png", bbox_inches="tight", pad_inches=0)
+    img_byte_array.seek(0)
+    return img_byte_array
+
+
+def convert_figure_to_image(figure: plt.figure):
+    """
+    Convert a passed figure to an image.
+
+    :param figure: A matplotlib figure.
+    :return: A BytesIO object containing the image data.
+    """
+
+    img_byte_array = io.BytesIO()
+    figure.savefig(
+        img_byte_array,
+        format="png",
+        pad_inches=0.2,
+        bbox_inches="tight",
+    )
     img_byte_array.seek(0)
     return img_byte_array
