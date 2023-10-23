@@ -58,33 +58,7 @@ def generate_mandelbrot_set(zoom_percentage: float, max_iterations: int) -> np.a
     return result
 
 
-def convert_set_to_image(mandelbrot_set: np.array, color_map: str) -> io.BytesIO:
-    """
-    Convert a mandelbrot set to an image.
-
-    :param mandelbrot_set: A numpy array representing the mandelbrot set.
-    :param color_map: A string representing the color map to be used for the image.
-    :return: A BytesIO object containing the image data.
-    """
-    import matplotlib.pyplot as plt
-
-    plt.figure(dpi=100)
-    plt.imshow(
-        mandelbrot_set.T,
-        cmap=color_map,
-        interpolation="bilinear",
-        extent=[-2, 1, -1, 1],
-    )
-    # hide axis
-    plt.axis("off")
-
-    img_byte_array = io.BytesIO()
-    plt.savefig(img_byte_array, format="png", bbox_inches="tight", pad_inches=0)
-    img_byte_array.seek(0)
-    return img_byte_array
-
-
-def main():
+def __main():
     cols = 2000
     rows = 2000
 
@@ -115,4 +89,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    __main()
