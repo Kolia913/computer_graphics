@@ -11,6 +11,11 @@ def home():
     return jsonify({"error": "API Mode. /api/.."}), 404
 
 
+@app.route("/api/color_maps")
+def color_maps():
+    return jsonify({"color_maps": plt.colormaps()})
+
+
 @app.route("/api/mandelbrot", methods=["POST"])
 def mandelbrot_fractal():
     data = request.get_json()
