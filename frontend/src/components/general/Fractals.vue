@@ -42,6 +42,7 @@ export default {
   methods: {
     onFractalSelect(fractal) {
       this.fractal = fractal;
+
       this.$emit('onFractalSelect', fractal);
     },
   },

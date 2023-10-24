@@ -29,7 +29,7 @@ export default defineStore('fractals', {
         save_to_file,
       });
 
-      this.mandelbrotImage = res.data;
+      this.mandelbrotImage = res.data.image;
     },
 
     async getJulia({ max_iterations, zoom_percentage, color_map, c_real, c_imag, save_to_file }) {
@@ -42,7 +42,7 @@ export default defineStore('fractals', {
         save_to_file,
       });
 
-      this.juliaImage = res.data;
+      this.juliaImage = res.data.image;
     },
 
     async getVicsek({ levels }) {
@@ -50,7 +50,7 @@ export default defineStore('fractals', {
         levels,
       });
 
-      this.vicsekImage = res.data;
+      this.vicsekImage = res.data.image;
     },
   },
 });

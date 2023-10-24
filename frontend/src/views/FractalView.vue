@@ -13,19 +13,18 @@
               :image="'data:image/png;base64, ' + fractalImage"
               @onFractalSelect="selectFractal"
             />
+
             <div class="pt-2">
               <SliderInput @onChange="zoomChange" />
             </div>
             <VeeForm
               @submit="onSubmit"
-              :validation-schema="schema"
+              :validation-schema="jScheme"
               class="pt-8 flex flex-row justify-between"
+              v-if="currentFractal === 'julia'"
             >
               <div class="flex flex-col justify-start items-stretch gap-4">
-                <div
-                  class="flex flex-row justify-between items-center gap-8"
-                  v-if="currentFractal !== 'vicsek'"
-                >
+                <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Iterations:</span>
                   <div>
                     <PlainInput name="iterations" type="number" />
@@ -34,33 +33,75 @@
                 <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Colour:</span>
                   <div>
-                    <SelectInput :options="colorsSchemes" />
+                    <SelectInput :options="colorsSchemes" @onChange="colorChange" />
                   </div>
                 </div>
               </div>
               <div class="flex flex-col justify-start items-stretch gap-4">
-                <div
-                  class="flex flex-row justify-between items-center gap-8"
-                  v-if="currentFractal === 'julia'"
-                >
+                <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Reals C:</span>
                   <div>
                     <PlainInput name="real_c" type="number" />
                   </div>
                 </div>
-                <div
-                  class="flex flex-row justify-between items-center gap-8"
-                  v-if="currentFractal === 'julia'"
-                >
+                <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Imag C:</span>
                   <div>
                     <PlainInput name="imag_c" type="number" />
                   </div>
                 </div>
-                <div
-                  class="flex flex-row justify-between items-center gap-8"
-                  v-if="currentFractal === 'vicsek'"
-                >
+              </div>
+              <div class="flex flex-col justify-between items-start">
+                <ActionButton text="Submit" type="submit">
+                  <SaveIcon />
+                </ActionButton>
+              </div>
+            </VeeForm>
+            <VeeForm
+              @submit="onSubmit"
+              :validation-schema="mScheme"
+              class="pt-8 flex flex-row justify-between"
+              v-if="currentFractal === 'mandelbrot'"
+            >
+              <div class="flex flex-col justify-start items-stretch gap-4">
+                <div class="flex flex-row justify-between items-center gap-8">
+                  <span class="text-lg font-light underline underline-offset-2">Iterations:</span>
+                  <div>
+                    <PlainInput name="iterations" type="number" />
+                  </div>
+                </div>
+                <div class="flex flex-row justify-between items-center gap-8">
+                  <span class="text-lg font-light underline underline-offset-2">Colour:</span>
+                  <div>
+                    <SelectInput :options="colorsSchemes" @onChange="colorChange" />
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col justify-between items-start">
+                <!-- <span class="text-base font-light underline underline-offset-4">
+                  Fractal formula:<br />f(z) = z * z + c</span
+                > -->
+                <ActionButton text="Submit" type="submit">
+                  <SaveIcon />
+                </ActionButton>
+              </div>
+            </VeeForm>
+            <VeeForm
+              @submit="onSubmit"
+              :validation-schema="vScheme"
+              class="pt-8 flex flex-row justify-between"
+              v-if="currentFractal === 'vicsek'"
+            >
+              <div class="flex flex-col justify-start items-stretch gap-4">
+                <div class="flex flex-row justify-between items-center gap-8">
+                  <span class="text-lg font-light underline underline-offset-2">Colour:</span>
+                  <div>
+                    <SelectInput :options="colorsSchemes" @onChange="colorChange" />
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col justify-start items-stretch gap-4">
+                <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Levels:</span>
                   <div>
                     <PlainInput name="levels" type="number" />
@@ -71,7 +112,7 @@
                 <!-- <span class="text-base font-light underline underline-offset-4">
                   Fractal formula:<br />f(z) = z * z + c</span
                 > -->
-                <ActionButton text="Submit">
+                <ActionButton text="Submit" type="submit">
                   <SaveIcon />
                 </ActionButton>
               </div>
@@ -147,15 +188,22 @@ export default {
     WatchingList,
     ReadingList,
   },
+
   data() {
     return {
       zoom: 10,
       color_scheme: '',
-      schema: {
+      fractalImage: '',
+      jScheme: {
         iterations: 'required|min_value:1|max_value:9999',
-        levels: 'required|min_value:1|max_value:5',
-        real_c: 'required|min_value:1|max_value:9999',
-        imag_c: 'required|min_value:1|max_value:9999',
+        real_c: 'required|max_value:9999',
+        imag_c: 'required|max_value:9999',
+      },
+      mScheme: {
+        iterations: 'required|min_value:1|max_value:9999',
+      },
+      vScheme: {
+        levels: 'required|min_value:1|max_value:4',
       },
       visibleModal: '',
       options: [],
@@ -228,15 +276,6 @@ export default {
       'juliaImage',
       'vicsekImage',
     ]),
-    fractalImage() {
-      if (this.currentFractal === 'mandelbrot') {
-        return this.mandelbrotImage;
-      } else if (this.currentFractal === 'juila') {
-        return this.juliaImage;
-      } else {
-        return this.mandelbrotImage;
-      }
-    },
   },
   mounted() {
     this.getColorSchemes();
@@ -246,10 +285,11 @@ export default {
       zoom_percentage: this.zoom,
       color_map: 'magma',
       save_to_file: false,
-    });
+    }).then(() => (this.fractalImage = this.mandelbrotImage));
   },
   methods: {
-    async selectFractal(fractal) {
+    selectFractal(fractal) {
+      this.fractalImage = '';
       switch (fractal) {
         case 'vicsek':
           this.setCurrentFractal({ currentFractal: 'vicsek' });
@@ -266,6 +306,7 @@ export default {
       this.zoom = value;
     },
     colorChange(value) {
+      console.log(value);
       this.color_scheme = value;
     },
 
@@ -273,6 +314,7 @@ export default {
       this.$router.back();
     },
     async onSubmit(values) {
+      console.log(this.color_scheme, this.zoom, this.currentFractal, values);
       if (!this.color_scheme) {
         toast.error('Select color scheme!');
         return;
@@ -283,6 +325,7 @@ export default {
           await this.getVicsek({
             levels: values.levels,
           });
+          this.fractalImage = this.vicsekImage;
           break;
         case 'julia':
           this.setCurrentFractal({ currentFractal: 'julia' });
@@ -294,6 +337,7 @@ export default {
             c_imag: values.imag_c,
             save_to_file: false,
           });
+          this.fractalImage = this.juliaImage;
           break;
         default:
           this.setCurrentFractal({ currentFractal: 'mandelbrot' });
@@ -303,6 +347,7 @@ export default {
             color_map: this.color_scheme,
             save_to_file: false,
           });
+          this.fractalImage = this.mandelbrotImage;
           break;
       }
     },
