@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify, send_file
+from flask_cors import CORS
 from matplotlib import pyplot as plt
 
 from fractals import mandelbrot, julia, vicsek, utils
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config["CORS_HEADERS"] = "Content-Type"
 
 
 @app.route("/")
