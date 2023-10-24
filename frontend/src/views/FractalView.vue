@@ -279,7 +279,7 @@ export default {
     this.getMandlebrot({
       max_iterations: 100,
       zoom_percentage: this.zoom / 100,
-      color_map: 'magma',
+      color_map: 'hot',
       save_to_file: false,
     }).then(() => (this.fractalImage = this.mandelbrotImage));
   },
