@@ -22,7 +22,7 @@ export default {
       max: 100,
       step: 1,
       tooltip: true,
-      value: 10,
+      value: 0,
       handleScale: 1.8,
       tooltipText: '%v %',
       flipTooltip: true,
