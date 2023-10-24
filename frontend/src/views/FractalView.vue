@@ -329,7 +329,7 @@ export default {
           await this.getJulia({
             max_iterations: values.iterations,
             zoom_percentage: this.zoom / 100,
-            color_map: this.color_scheme,
+            color_map: this.color_scheme_j,
             c_real: values.real_c,
             c_imag: values.imag_c,
             save_to_file: false,
@@ -345,7 +345,7 @@ export default {
           await this.getMandlebrot({
             max_iterations: values.iterations,
             zoom_percentage: this.zoom / 100,
-            color_map: this.color_scheme,
+            color_map: this.color_scheme_m,
             save_to_file: false,
           });
           this.fractalImage = this.mandelbrotImage;
