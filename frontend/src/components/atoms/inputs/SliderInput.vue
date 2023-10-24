@@ -29,6 +29,11 @@ export default {
       alwaysShowHandle: true,
     };
   },
+  watch: {
+    value(newValue) {
+      this.$emit('onChange', newValue);
+    },
+  },
 };
 </script>
 <style>

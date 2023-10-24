@@ -42,7 +42,7 @@ export default defineStore('fractals', {
         save_to_file,
       });
 
-      this.juliaImae = res.data;
+      this.juliaImage = res.data;
     },
 
     async getVicsek({ levels }) {
