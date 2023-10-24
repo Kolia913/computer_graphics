@@ -22,6 +22,7 @@
               :validation-schema="jScheme"
               class="pt-8 flex flex-row justify-between"
               v-if="currentFractal === 'julia'"
+              :initial-values="{ iterations: 100, real_c: -0.7, imag_c: 0.4 }"
             >
               <div class="flex flex-col justify-start items-stretch gap-4">
                 <div class="flex flex-row justify-between items-center gap-8">
@@ -61,6 +62,7 @@
               @submit="onSubmit"
               :validation-schema="mScheme"
               class="pt-8 flex flex-row justify-between"
+              :initial-values="{ iterations: 100 }"
               v-if="currentFractal === 'mandelbrot'"
             >
               <div class="flex flex-col justify-start items-stretch gap-4">
@@ -91,6 +93,7 @@
               :validation-schema="vScheme"
               class="pt-8 flex flex-row justify-between"
               v-if="currentFractal === 'vicsek'"
+              :initial-values="{ levels: 4 }"
             >
               <div class="flex flex-col justify-start items-stretch gap-4">
                 <div class="flex flex-row justify-between items-center gap-8">

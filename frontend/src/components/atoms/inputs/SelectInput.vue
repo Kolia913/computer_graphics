@@ -1,10 +1,20 @@
 <template>
-  <v-select class="select w-full bg-white" :options="options" @option:selected="onChange" />
+  <v-select
+    class="select w-full bg-white"
+    :options="options"
+    @option:selected="onChange"
+    v-model="value"
+  />
 </template>
 <script>
 export default {
   name: 'FormSelect',
   props: ['options'],
+  data() {
+    return {
+      value: 'hot',
+    };
+  },
   methods: {
     onChange(e) {
       this.$emit('onChange', e);
