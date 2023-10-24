@@ -34,7 +34,7 @@
                 <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Colour:</span>
                   <div>
-                    <SelectInput :options="colorsSchemes" @onChange="colorChange" />
+                    <SelectInput :options="colorsSchemes" @onChange="colorChangeJ" />
                   </div>
                 </div>
               </div>
@@ -75,7 +75,7 @@
                 <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Colour:</span>
                   <div>
-                    <SelectInput :options="colorsSchemes" @onChange="colorChange" />
+                    <SelectInput :options="colorsSchemes" @onChange="colorChangeM" />
                   </div>
                 </div>
               </div>
@@ -95,14 +95,6 @@
               v-if="currentFractal === 'vicsek'"
               :initial-values="{ levels: 4 }"
             >
-              <div class="flex flex-col justify-start items-stretch gap-4">
-                <div class="flex flex-row justify-between items-center gap-8">
-                  <span class="text-lg font-light underline underline-offset-2">Colour:</span>
-                  <div>
-                    <SelectInput :options="colorsSchemes" @onChange="colorChange" />
-                  </div>
-                </div>
-              </div>
               <div class="flex flex-col justify-start items-stretch gap-4">
                 <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Levels:</span>
@@ -195,7 +187,8 @@ export default {
   data() {
     return {
       zoom: 0,
-      color_scheme: '',
+      color_scheme_m: '',
+      color_scheme_j: '',
       fractalImage: '',
       jScheme: {
         iterations: 'required|min_value:1|max_value:9999',
@@ -308,19 +301,17 @@ export default {
     zoomChange(value) {
       this.zoom = value;
     },
-    colorChange(value) {
-      console.log(value);
-      this.color_scheme = value;
+    colorChangeM(value) {
+      this.color_scheme_m = value;
+    },
+    colorChangeJ(value) {
+      this.color_scheme_j = value;
     },
 
     goBack() {
       this.$router.back();
     },
     async onSubmit(values) {
-      if (!this.color_scheme) {
-        toast.error('Select color scheme!');
-        return;
-      }
       switch (this.currentFractal) {
         case 'vicsek':
           this.setCurrentFractal({ currentFractal: 'vicsek' });
@@ -331,6 +322,10 @@ export default {
           break;
         case 'julia':
           this.setCurrentFractal({ currentFractal: 'julia' });
+          if (!this.color_scheme_j) {
+            toast.error('Select color scheme!');
+            return;
+          }
           await this.getJulia({
             max_iterations: values.iterations,
             zoom_percentage: this.zoom / 100,
@@ -343,6 +338,10 @@ export default {
           break;
         default:
           this.setCurrentFractal({ currentFractal: 'mandelbrot' });
+          if (!this.color_scheme_m) {
+            toast.error('Select color scheme!');
+            return;
+          }
           await this.getMandlebrot({
             max_iterations: values.iterations,
             zoom_percentage: this.zoom / 100,
