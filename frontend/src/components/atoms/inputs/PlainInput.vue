@@ -5,7 +5,7 @@
       :name="name"
       :type="type ? type : 'text'"
     />
-    <ErrorMessage :name="name" class="text-red text-sm font-light absolute left-0 top-9" />
+    <ErrorMessage :name="name" class="text-red text-xs font-light absolute left-0 top-8" />
   </div>
 </template>
 <script>
