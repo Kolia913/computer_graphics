@@ -26,7 +26,7 @@
     <div
       class="bg-white w-full fractal-image rounded-md border border-solid border-stroke rounded-tl-none p-3"
     >
-      <img :src="image" class="w-full h-full" />
+      <img :src="image" class="w-full h-full object-contain overflow-scroll" />
     </div>
   </div>
 </template>

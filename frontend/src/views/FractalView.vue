@@ -191,7 +191,7 @@ export default {
 
   data() {
     return {
-      zoom: 10,
+      zoom: 0,
       color_scheme: '',
       fractalImage: '',
       jScheme: {
@@ -282,7 +282,7 @@ export default {
     this.selectFractal({ currentFractal: 'mandelbrot' });
     this.getMandlebrot({
       max_iterations: 100,
-      zoom_percentage: this.zoom,
+      zoom_percentage: this.zoom / 100,
       color_map: 'magma',
       save_to_file: false,
     }).then(() => (this.fractalImage = this.mandelbrotImage));
@@ -314,7 +314,6 @@ export default {
       this.$router.back();
     },
     async onSubmit(values) {
-      console.log(this.color_scheme, this.zoom, this.currentFractal, values);
       if (!this.color_scheme) {
         toast.error('Select color scheme!');
         return;
@@ -331,7 +330,7 @@ export default {
           this.setCurrentFractal({ currentFractal: 'julia' });
           await this.getJulia({
             max_iterations: values.iterations,
-            zoom_percentage: this.zoom,
+            zoom_percentage: this.zoom / 100,
             color_map: this.color_scheme,
             c_real: values.real_c,
             c_imag: values.imag_c,
@@ -343,7 +342,7 @@ export default {
           this.setCurrentFractal({ currentFractal: 'mandelbrot' });
           await this.getMandlebrot({
             max_iterations: values.iterations,
-            zoom_percentage: this.zoom,
+            zoom_percentage: this.zoom / 100,
             color_map: this.color_scheme,
             save_to_file: false,
           });

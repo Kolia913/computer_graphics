@@ -4,7 +4,8 @@
     :class="!!isTransparent ? 'bg-terminal/70' : 'bg-terminal/90'"
   >
     <div
-      class="absolute top-0 left-0 bottom-0 h-10 w-full bg-terminal rounded-t-lg flex justify-between items-center border-b border-solid border-terminal-stroke"
+      class="absolute top-0 left-0 bottom-0 h-10 w-full bg-terminal rounded-t-lg flex items-center border-b border-solid border-terminal-stroke"
+      :class="isClosable ? 'justify-between' : 'justify-center'"
     >
       <div v-if="isClosable"></div>
       <div class="felx justify-center items-center">
