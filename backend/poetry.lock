@@ -78,6 +78,17 @@ async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
 
 [[package]]
+name = "flask-cors"
+version = "4.0.0"
+description = "A Flask extension adding a decorator for CORS support"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Flask = ">=0.9"
+
+[[package]]
 name = "fonttools"
 version = "4.43.1"
 description = "Tools to manipulate font files"
@@ -277,7 +288,7 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.11,<3.13"
-content-hash = "072de22c0c5ff99a846a86ffc4b027a536bfea7aed6636be2f2d65b8bc3ab4b2"
+content-hash = "20aad4559fbcff04c9e56a0de1efa8a4d8cd9f2e302e75950971e44f33372c56"
 
 [metadata.files]
 blinker = []
@@ -286,6 +297,7 @@ colorama = []
 contourpy = []
 cycler = []
 flask = []
+flask-cors = []
 fonttools = []
 itsdangerous = []
 jinja2 = []
