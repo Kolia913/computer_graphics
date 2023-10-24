@@ -36,7 +36,7 @@ export default {
   props: ['image'],
   data() {
     return {
-      fractal: '',
+      fractal: 'mandelbrot',
     };
   },
   methods: {
