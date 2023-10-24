@@ -1,10 +1,5 @@
 <template>
-  <v-select
-    class="select w-full bg-white"
-    :options="options"
-    :reduce="(item) => item.code"
-    @change="onChange"
-  />
+  <v-select class="select w-full bg-white" :options="options" @option:selected="onChange" />
 </template>
 <script>
 export default {
@@ -35,5 +30,6 @@ export default {
 
   --vs-dropdown-option--active-bg: #d9d9d9;
   --vs-dropdown-option--active-color: #000;
+  --vs-dropdown-max-height: 90px;
 }
 </style>

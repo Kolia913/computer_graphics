@@ -10,6 +10,7 @@
     :tooltipText="tooltipText"
     :handleScale="handleScale"
     :alwaysShowHandle="alwaysShowHandle"
+    @drag-end="onChange"
   />
 </template>
 <script>
@@ -29,9 +30,9 @@ export default {
       alwaysShowHandle: true,
     };
   },
-  watch: {
-    value(newValue) {
-      this.$emit('onChange', newValue);
+  methods: {
+    onChange(value) {
+      this.$emit('onChange', value);
     },
   },
 };
