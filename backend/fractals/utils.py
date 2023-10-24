@@ -1,3 +1,4 @@
+import base64
 from matplotlib.transforms import Bbox
 import numpy as np
 import io
@@ -29,7 +30,10 @@ def convert_set_to_image(
     img_byte_array = io.BytesIO()
     plt.savefig(img_byte_array, format="png", bbox_inches="tight", pad_inches=0)
     img_byte_array.seek(0)
-    return img_byte_array
+
+    # convert image to base64 encoded string
+    img_base64 = base64.b64encode(img_byte_array.getvalue()).decode()
+    return img_base64
 
 
 def convert_figure_to_image(figure: plt.figure):
@@ -48,4 +52,6 @@ def convert_figure_to_image(figure: plt.figure):
         bbox_inches="tight",
     )
     img_byte_array.seek(0)
-    return img_byte_array
+    # convert image to base64 encoded string
+    img_base64 = base64.b64encode(img_byte_array.getvalue()).decode()
+    return img_base64

@@ -1,3 +1,5 @@
+import base64
+import io
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from matplotlib import pyplot as plt
@@ -47,13 +49,14 @@ def mandelbrot_fractal():
 
     if save_to_file:
         return send_file(
-            img,
+            io.BytesIO(base64.b64decode(img),
             as_attachment=True,
             mimetype="image/png",
             download_name="mandelbrot.png",
         )
 
-    return send_file(img, mimetype="image/png")
+    # return send_file(img, mimetype="image/png")
+    return img
 
 
 @app.route("/api/julia", methods=["POST"])
@@ -96,13 +99,14 @@ def julia_fractal():
 
     if save_to_file:
         return send_file(
-            img,
+            io.BytesIO(base64.b64decode(img)),
             as_attachment=True,
             mimetype="image/png",
             download_name="julia.png",
         )
 
-    return send_file(img, mimetype="image/png")
+    # return send_file(img, mimetype="image/png")
+    return img
 
 
 # add timeout
@@ -129,13 +133,13 @@ def vicsek_fractal():
 
     if save_to_file:
         return send_file(
-            img,
+            io.BytesIO(base64.b64decode(img),
             as_attachment=True,
             mimetype="image/png",
             download_name="vicsek.png",
         )
 
-    return send_file(img, mimetype="image/png")
+    return img
 
 
 if __name__ == "__main__":
