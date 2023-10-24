@@ -128,6 +128,9 @@ import ProgramWindow from '../components/general/windows/ProgramWindow.vue';
 import SaveIcon from '../components/icons/SaveIcon.vue';
 import { mapActions, mapState } from 'pinia';
 import useFractalsStore from '../stores/fractals';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 export default {
   name: 'FractalView',
@@ -241,7 +244,7 @@ export default {
     this.getMandlebrot({
       max_iterations: 100,
       zoom_percentage: this.zoom,
-      color_map: this.color_scheme,
+      color_map: 'magma',
       save_to_file: false,
     });
   },
@@ -270,6 +273,10 @@ export default {
       this.$router.back();
     },
     async onSubmit(values) {
+      if (!this.color_scheme) {
+        toast.error('Select color scheme!');
+        return;
+      }
       switch (this.currentFractal) {
         case 'vicsek':
           this.setCurrentFractal({ currentFractal: 'vicsek' });
