@@ -9,26 +9,58 @@
         <div class="flex flex-row justify-center items-start w-full gap-4">
           <ProgramMenu @onBackClick="goBack" @onLinkClick="onLinkClick" />
           <div class="w-full">
-            <Fractals />
+            <Fractals :image="fractalImage" @onFractalSelect="selectFractal" />
             <div class="pt-2">
               <SliderInput />
             </div>
             <VeeForm
               @submit="onSubmit"
               :validation-schema="schema"
-              class="pt-16 flex flex-row justify-between"
+              class="pt-8 flex flex-row justify-between"
             >
-              <div class="flex flex-col justify-center items-stretch">
-                <div class="flex flex-row justify-between items-center gap-8">
-                  <span class="text-lg font-light underline underline-offset-2">Constant C:</span>
+              <div class="flex flex-col justify-start items-stretch gap-4">
+                <div
+                  class="flex flex-row justify-between items-center gap-8"
+                  v-if="currentFractal !== 'vicsek'"
+                >
+                  <span class="text-lg font-light underline underline-offset-2">Iterations:</span>
                   <div>
-                    <PlainInput name="constant" type="number" />
+                    <PlainInput name="iterations" type="number" />
                   </div>
                 </div>
-                <div class="flex flex-row justify-between items-center pt-8">
+                <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Colour:</span>
                   <div>
                     <SelectInput :options="options" />
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col justify-start items-stretch gap-4">
+                <div
+                  class="flex flex-row justify-between items-center gap-8"
+                  v-if="currentFractal === 'julia'"
+                >
+                  <span class="text-lg font-light underline underline-offset-2">Reals C:</span>
+                  <div>
+                    <PlainInput name="real_c" type="number" />
+                  </div>
+                </div>
+                <div
+                  class="flex flex-row justify-between items-center gap-8"
+                  v-if="currentFractal === 'julia'"
+                >
+                  <span class="text-lg font-light underline underline-offset-2">Imag C:</span>
+                  <div>
+                    <PlainInput name="imag_c" type="number" />
+                  </div>
+                </div>
+                <div
+                  class="flex flex-row justify-between items-center gap-8"
+                  v-if="currentFractal === 'vicsek'"
+                >
+                  <span class="text-lg font-light underline underline-offset-2">Levels:</span>
+                  <div>
+                    <PlainInput name="levels" type="number" />
                   </div>
                 </div>
               </div>
@@ -91,6 +123,8 @@ import ReadingList from '../components/general/lists/ReadingList.vue';
 import WatchingList from '../components/general/lists/WatchingList.vue';
 import ProgramWindow from '../components/general/windows/ProgramWindow.vue';
 import SaveIcon from '../components/icons/SaveIcon.vue';
+import { mapActions, mapState } from 'pinia';
+import useFractalsStore from '../stores/fractals';
 
 export default {
   name: 'FractalView',
@@ -110,23 +144,13 @@ export default {
   data() {
     return {
       schema: {
-        constant: 'required|min_value:1|max_value:9999',
+        iterations: 'required|min_value:1|max_value:9999',
+        levels: 'required|min_value:1|max_value:5',
+        real_c: 'required|min_value:1|max_value:9999',
+        imag_c: 'required|min_value:1|max_value:9999',
       },
       visibleModal: '',
-      options: [
-        {
-          label: 'Red & Black',
-          code: 'rb',
-        },
-        {
-          label: 'Yellow & Blue',
-          code: 'yb',
-        },
-        {
-          label: 'Gray & Pink',
-          code: 'gp',
-        },
-      ],
+      options: [],
       modalsContent: {
         assignmentIfno: {
           name: 'Lab 2. Build fractal for Lab 2',
@@ -188,7 +212,60 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState(useFractalsStore, [
+      'colorsSchemes',
+      'currentFractal',
+      'mandelbrotImage',
+      'juliaImage',
+      'vicsekImage',
+    ]),
+    fractalImage() {
+      if (this.currentFractal === 'mandelbrot') {
+        return this.mandelbrotImage;
+      } else if (this.currentFractal === 'juila') {
+        return this.juliaImage;
+      } else {
+        return this.mandelbrotImage;
+      }
+    },
+  },
+  mounted() {
+    this.getColorSchemes().then((res) => {
+      console.log(res);
+    });
+  },
   methods: {
+    async selectFractal(fractal) {
+      switch (fractal) {
+        case 'vicsek':
+          this.setCurrentFractal({ currentFractal: 'vicsek' });
+          await this.getVicsek({
+            levels: 5,
+          });
+          break;
+        case 'julia':
+          this.setCurrentFractal({ currentFractal: 'julia' });
+          await this.getJulia({
+            max_iterations: 1000,
+            zoom_percentage: 0.3,
+            color_map: 'hot',
+            c_real: -0.7,
+            c_imag: 0.4,
+            save_to_file: false,
+          });
+          break;
+        default:
+          this.setCurrentFractal({ currentFractal: 'mandelbrot' });
+          await this.getMandlebrot({
+            max_iterations: 100,
+            zoom_percentage: 0,
+            color_map: 'hot',
+            save_to_file: false,
+          });
+          break;
+      }
+    },
     goBack() {
       this.$router.back();
     },
@@ -201,6 +278,13 @@ export default {
     onCloseClick() {
       this.visibleModal = '';
     },
+    ...mapActions(useFractalsStore, [
+      'getColorSchemes',
+      'getMandlebrot',
+      'getJulia',
+      'getVicsek',
+      'setCurrentFractal',
+    ]),
   },
 };
 </script>
