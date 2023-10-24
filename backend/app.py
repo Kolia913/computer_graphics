@@ -49,14 +49,14 @@ def mandelbrot_fractal():
 
     if save_to_file:
         return send_file(
-            io.BytesIO(base64.b64decode(img),
+            io.BytesIO(base64.b64decode(img)),
             as_attachment=True,
             mimetype="image/png",
             download_name="mandelbrot.png",
         )
 
     # return send_file(img, mimetype="image/png")
-    return img
+    return jsonify({"image": img})
 
 
 @app.route("/api/julia", methods=["POST"])
@@ -106,10 +106,7 @@ def julia_fractal():
         )
 
     # return send_file(img, mimetype="image/png")
-    return img
-
-
-# add timeout
+    return jsonify({"image": img})
 
 
 @app.route("/api/vicsek", methods=["POST"])
@@ -133,13 +130,13 @@ def vicsek_fractal():
 
     if save_to_file:
         return send_file(
-            io.BytesIO(base64.b64decode(img),
+            io.BytesIO(base64.b64decode(img)),
             as_attachment=True,
             mimetype="image/png",
             download_name="vicsek.png",
         )
 
-    return img
+    return jsonify({"image": img})
 
 
 if __name__ == "__main__":
