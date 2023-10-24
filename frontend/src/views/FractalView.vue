@@ -187,8 +187,8 @@ export default {
   data() {
     return {
       zoom: 0,
-      color_scheme_m: '',
-      color_scheme_j: '',
+      color_scheme_m: 'hot',
+      color_scheme_j: 'hot',
       fractalImage: '',
       jScheme: {
         iterations: 'required|min_value:1|max_value:9999',
