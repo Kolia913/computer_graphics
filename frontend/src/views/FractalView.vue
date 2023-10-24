@@ -25,13 +25,13 @@
                 >
                   <span class="text-lg font-light underline underline-offset-2">Iterations:</span>
                   <div>
-                    <PlainInput name="iterations" type="number" />
+                    <PlainInput name="iterations" type="number" @onChange="iterationsChange" />
                   </div>
                 </div>
                 <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Colour:</span>
                   <div>
-                    <SelectInput :options="options" />
+                    <SelectInput :options="options" @onChange="colorChange" />
                   </div>
                 </div>
               </div>
@@ -42,7 +42,7 @@
                 >
                   <span class="text-lg font-light underline underline-offset-2">Reals C:</span>
                   <div>
-                    <PlainInput name="real_c" type="number" />
+                    <PlainInput name="real_c" type="number" @onChange="realCChange" />
                   </div>
                 </div>
                 <div
@@ -51,7 +51,7 @@
                 >
                   <span class="text-lg font-light underline underline-offset-2">Imag C:</span>
                   <div>
-                    <PlainInput name="imag_c" type="number" />
+                    <PlainInput name="imag_c" type="number" @onChange="imagCChange" />
                   </div>
                 </div>
                 <div
@@ -60,14 +60,14 @@
                 >
                   <span class="text-lg font-light underline underline-offset-2">Levels:</span>
                   <div>
-                    <PlainInput name="levels" type="number" />
+                    <PlainInput name="levels" type="number" @onChange="levelsChange" />
                   </div>
                 </div>
               </div>
               <div class="flex flex-col justify-between items-start">
-                <span class="text-base font-light underline underline-offset-4">
+                <!-- <span class="text-base font-light underline underline-offset-4">
                   Fractal formula:<br />f(z) = z * z + c</span
-                >
+                > -->
                 <ActionButton text="Save to file...">
                   <SaveIcon />
                 </ActionButton>
@@ -265,6 +265,21 @@ export default {
           });
           break;
       }
+    },
+    iterationsChange(value) {
+      console.log(value);
+    },
+    colorChange(value) {
+      console.log(value);
+    },
+    realCChange(value) {
+      console.log(value);
+    },
+    imagCChange(value) {
+      console.log(value);
+    },
+    levelsChange(value) {
+      console.log(value);
     },
     goBack() {
       this.$router.back();

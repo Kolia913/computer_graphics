@@ -1,10 +1,20 @@
 <template>
-  <v-select class="select w-full bg-white" :options="options" :reduce="(item) => item.code" />
+  <v-select
+    class="select w-full bg-white"
+    :options="options"
+    :reduce="(item) => item.code"
+    @change="onChange"
+  />
 </template>
 <script>
 export default {
   name: 'FormSelect',
   props: ['options'],
+  methods: {
+    onChange(e) {
+      this.$emit('onChange', e);
+    },
+  },
 };
 </script>
 <style scoped>

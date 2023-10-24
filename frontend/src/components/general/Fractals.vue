@@ -2,19 +2,22 @@
   <div class="flex flex-col justify-start items-start w-full">
     <div class="flex flex-row justify-start items-end">
       <div
-        class="border border-solid border-stroke border-b-0 rounded-tl-md bg-white cursor-pointer px-4 py-0.5 hover:text-white hover:bg-primary"
+        class="border border-solid border-stroke border-b-0 rounded-tl-md cursor-pointer px-4 py-0.5 hover:text-white hover:bg-primary"
+        :class="fractal === 'mandelbrot' ? 'text-white bg-primary' : 'bg-white'"
         @click="onFractalSelect('mandelbrot')"
       >
         <span class="font-light underline underline-offset-2">Mandelbrot</span>
       </div>
       <div
-        class="border border-l-0 border-b-0 border-solid border-stroke bg-white cursor-pointer px-4 py-0.5 hover:text-white hover:bg-primary"
+        class="border border-l-0 border-b-0 border-solid border-stroke cursor-pointer px-4 py-0.5 hover:text-white hover:bg-primary"
+        :class="fractal === 'vicsek' ? 'text-white bg-primary' : 'bg-white'"
         @click="onFractalSelect('vicsek')"
       >
         <span class="font-light underline underline-offset-2">Vicsek</span>
       </div>
       <div
-        class="border border-l-0 border-b-0 border-solid border-stroke rounded-tr-md bg-white cursor-pointer px-4 py-0.5 hover:text-white hover:bg-primary"
+        class="border border-l-0 border-b-0 border-solid border-stroke rounded-tr-md cursor-pointer px-4 py-0.5 hover:text-white hover:bg-primary"
+        :class="fractal === 'julia' ? 'text-white bg-primary' : 'bg-white'"
         @click="onFractalSelect('julia')"
       >
         <span class="font-light underline underline-offset-2">Zhulin</span>
@@ -31,8 +34,14 @@
 export default {
   name: 'Fractals',
   props: ['image'],
+  data() {
+    return {
+      fractal: '',
+    };
+  },
   methods: {
     onFractalSelect(fractal) {
+      this.fractal = fractal;
       this.$emit('onFractalSelect', fractal);
     },
   },
