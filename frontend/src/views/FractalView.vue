@@ -9,9 +9,12 @@
         <div class="flex flex-row justify-center items-start w-full gap-4">
           <ProgramMenu @onBackClick="goBack" @onLinkClick="onLinkClick" />
           <div class="w-full">
-            <Fractals :image="fractalImage" @onFractalSelect="selectFractal" />
+            <Fractals
+              :image="'data:image/png;base64, ' + fractalImage"
+              @onFractalSelect="selectFractal"
+            />
             <div class="pt-2">
-              <SliderInput />
+              <SliderInput @onChange="zoomChange" />
             </div>
             <VeeForm
               @submit="onSubmit"
@@ -25,13 +28,13 @@
                 >
                   <span class="text-lg font-light underline underline-offset-2">Iterations:</span>
                   <div>
-                    <PlainInput name="iterations" type="number" @onChange="iterationsChange" />
+                    <PlainInput name="iterations" type="number" />
                   </div>
                 </div>
                 <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Colour:</span>
                   <div>
-                    <SelectInput :options="options" @onChange="colorChange" />
+                    <SelectInput :options="colorsSchemes" />
                   </div>
                 </div>
               </div>
@@ -42,7 +45,7 @@
                 >
                   <span class="text-lg font-light underline underline-offset-2">Reals C:</span>
                   <div>
-                    <PlainInput name="real_c" type="number" @onChange="realCChange" />
+                    <PlainInput name="real_c" type="number" />
                   </div>
                 </div>
                 <div
@@ -51,7 +54,7 @@
                 >
                   <span class="text-lg font-light underline underline-offset-2">Imag C:</span>
                   <div>
-                    <PlainInput name="imag_c" type="number" @onChange="imagCChange" />
+                    <PlainInput name="imag_c" type="number" />
                   </div>
                 </div>
                 <div
@@ -60,7 +63,7 @@
                 >
                   <span class="text-lg font-light underline underline-offset-2">Levels:</span>
                   <div>
-                    <PlainInput name="levels" type="number" @onChange="levelsChange" />
+                    <PlainInput name="levels" type="number" />
                   </div>
                 </div>
               </div>
@@ -68,7 +71,7 @@
                 <!-- <span class="text-base font-light underline underline-offset-4">
                   Fractal formula:<br />f(z) = z * z + c</span
                 > -->
-                <ActionButton text="Save to file...">
+                <ActionButton text="Submit">
                   <SaveIcon />
                 </ActionButton>
               </div>
@@ -143,6 +146,8 @@ export default {
   },
   data() {
     return {
+      zoom: 10,
+      color_scheme: '',
       schema: {
         iterations: 'required|min_value:1|max_value:9999',
         levels: 'required|min_value:1|max_value:5',
@@ -231,8 +236,13 @@ export default {
     },
   },
   mounted() {
-    this.getColorSchemes().then((res) => {
-      console.log(res);
+    this.getColorSchemes();
+    this.selectFractal({ currentFractal: 'mandelbrot' });
+    this.getMandlebrot({
+      max_iterations: 100,
+      zoom_percentage: this.zoom,
+      color_map: this.color_scheme,
+      save_to_file: false,
     });
   },
   methods: {
@@ -240,52 +250,54 @@ export default {
       switch (fractal) {
         case 'vicsek':
           this.setCurrentFractal({ currentFractal: 'vicsek' });
+          break;
+        case 'julia':
+          this.setCurrentFractal({ currentFractal: 'julia' });
+          break;
+        default:
+          this.setCurrentFractal({ currentFractal: 'mandelbrot' });
+          break;
+      }
+    },
+    zoomChange(value) {
+      this.zoom = value;
+    },
+    colorChange(value) {
+      this.color_scheme = value;
+    },
+
+    goBack() {
+      this.$router.back();
+    },
+    async onSubmit(values) {
+      switch (this.currentFractal) {
+        case 'vicsek':
+          this.setCurrentFractal({ currentFractal: 'vicsek' });
           await this.getVicsek({
-            levels: 5,
+            levels: values.levels,
           });
           break;
         case 'julia':
           this.setCurrentFractal({ currentFractal: 'julia' });
           await this.getJulia({
-            max_iterations: 1000,
-            zoom_percentage: 0.3,
-            color_map: 'hot',
-            c_real: -0.7,
-            c_imag: 0.4,
+            max_iterations: values.iterations,
+            zoom_percentage: this.zoom,
+            color_map: this.color_scheme,
+            c_real: values.real_c,
+            c_imag: values.imag_c,
             save_to_file: false,
           });
           break;
         default:
           this.setCurrentFractal({ currentFractal: 'mandelbrot' });
           await this.getMandlebrot({
-            max_iterations: 100,
-            zoom_percentage: 0,
-            color_map: 'hot',
+            max_iterations: values.iterations,
+            zoom_percentage: this.zoom,
+            color_map: this.color_scheme,
             save_to_file: false,
           });
           break;
       }
-    },
-    iterationsChange(value) {
-      console.log(value);
-    },
-    colorChange(value) {
-      console.log(value);
-    },
-    realCChange(value) {
-      console.log(value);
-    },
-    imagCChange(value) {
-      console.log(value);
-    },
-    levelsChange(value) {
-      console.log(value);
-    },
-    goBack() {
-      this.$router.back();
-    },
-    onSubmit(values) {
-      console.log(values);
     },
     onLinkClick(type) {
       this.visibleModal = type;
