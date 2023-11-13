@@ -253,7 +253,7 @@ export default {
           toast.success('Congrats!');
         });
       } catch (e) {
-        toast.error(e.message ? e.message : 'Invalid form data!');
+        toast.error(e.response.data.error.message);
       }
     },
     async changeFile(event) {
