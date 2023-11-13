@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <VeeField
-      class="bg-white border border-solid border-stroke rounded-md h-8 px-2"
+      class="bg-white border border-solid border-stroke rounded-md h-8 px-2 w-full"
       :name="name"
       :type="type ? type : 'text'"
     />

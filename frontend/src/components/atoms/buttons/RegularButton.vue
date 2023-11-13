@@ -1,5 +1,9 @@
 <template>
-  <button class="h-8 w-56 rounded-md bg-grey-light hover:bg-grey-light-darker" @click="onClick">
+  <button
+    class="h-8 w-56 rounded-md bg-grey-light hover:bg-grey-light-darker"
+    @click="onClick"
+    type="button"
+  >
     <span>{{ text }}</span>
   </button>
 </template>

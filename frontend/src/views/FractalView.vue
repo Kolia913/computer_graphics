@@ -307,7 +307,6 @@ export default {
     colorChangeJ(value) {
       this.color_scheme_j = value;
     },
-
     goBack() {
       this.$router.back();
     },
