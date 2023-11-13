@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-row justify-center">
     <button
+      type="button"
       :class="
         this.selectedVariant === 'hsv'
           ? 'rounded-md bg-primary w-20 text-white -mr-1 p-2 z-10'
@@ -11,6 +12,7 @@
       HSV
     </button>
     <button
+      type="button"
       :class="
         this.selectedVariant === 'cmyk'
           ? 'rounded-md bg-primary w-20 text-white -ml-1 p-2 z-10'
