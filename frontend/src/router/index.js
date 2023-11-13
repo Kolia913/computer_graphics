@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import FractalView from '../views/FractalView.vue';
 import ColorsView from '../views/ColorsView.vue';
+import AphineView from '../views/AphineView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,14 @@ const router = createRouter({
       path: '/colors',
       name: 'colors',
       component: ColorsView,
+      meta: {
+        layout: 'empty',
+      },
+    },
+    {
+      path: '/aphine',
+      name: 'aphine',
+      component: AphineView,
       meta: {
         layout: 'empty',
       },
