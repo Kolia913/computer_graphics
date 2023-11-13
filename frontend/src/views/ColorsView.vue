@@ -242,19 +242,20 @@ export default {
         toast.error('Please select file');
         return;
       }
-      try {
-        this.sendImageWithChanges({
-          ...values,
-          saturation: this.saturation,
-          lightness: this.lightness,
-          file: this.file,
-          scheme: this.colorScheme,
-        }).then(() => {
+
+      this.sendImageWithChanges({
+        ...values,
+        saturation: this.saturation,
+        lightness: this.lightness,
+        file: this.file,
+        scheme: this.colorScheme,
+      })
+        .then(() => {
           toast.success('Congrats!');
+        })
+        .catch((e) => {
+          toast.error(e.response.data.error.message);
         });
-      } catch (e) {
-        toast.error(e.response.data.error.message);
-      }
     },
     async changeFile(event) {
       this.file = event.target.files[0];
