@@ -9,7 +9,8 @@ export default defineStore('colors', {
   }),
   actions: {
     async sendImageWithChanges({ x1, x2, y1, y2, scheme, lightness, saturation, file }) {
-      const res = await axios.post(`${API_URL}api/colors/change_color_model`, {
+      const data = new FormData();
+      const json = JSON.stringify({
         x1,
         x2,
         y1,
@@ -17,8 +18,13 @@ export default defineStore('colors', {
         scheme,
         lightness,
         saturation,
-        file,
       });
+      const blob = new Blob([json], {
+        type: 'application/json',
+      });
+      data.append('image', file);
+      data.append('document', blob);
+      const res = await axios.post(`${API_URL}api/colors/change_color_model`, data);
       this.imageBase64 = res.data.image;
     },
     changeImageBase64(base64) {
