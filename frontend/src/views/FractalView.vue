@@ -34,7 +34,11 @@
                 <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Colour:</span>
                   <div>
-                    <SelectInput :options="colorsSchemes" @onChange="colorChangeJ" />
+                    <SelectInput
+                      :options="colorsSchemes"
+                      @onChange="colorChangeJ"
+                      :default-value="color_scheme_j"
+                    />
                   </div>
                 </div>
               </div>
@@ -75,7 +79,11 @@
                 <div class="flex flex-row justify-between items-center gap-8">
                   <span class="text-lg font-light underline underline-offset-2">Colour:</span>
                   <div>
-                    <SelectInput :options="colorsSchemes" @onChange="colorChangeM" />
+                    <SelectInput
+                      :options="colorsSchemes"
+                      @onChange="colorChangeM"
+                      :default-value="color_scheme_m"
+                    />
                   </div>
                 </div>
               </div>

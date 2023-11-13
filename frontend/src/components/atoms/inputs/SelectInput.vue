@@ -9,11 +9,16 @@
 <script>
 export default {
   name: 'FormSelect',
-  props: ['options'],
+  props: ['options', 'defaultValue'],
   data() {
     return {
-      value: 'hot',
+      value: '',
     };
+  },
+  watch: {
+    defaultValue(e) {
+      this.value = e;
+    },
   },
   methods: {
     onChange(e) {

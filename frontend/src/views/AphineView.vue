@@ -6,7 +6,7 @@
       :transparentHeader="visibleModal.length > 0"
     >
       <template #content>
-        <div class="flex flex-row justify-center items-start w-full gap-4">
+        <div class="flex flex-row justify-center items-center w-full gap-4">
           <ProgramMenu @onBackClick="goBack" @onLinkClick="onLinkClick" />
           <div class="w-full flex justify-start items-center pt-3 h-full">
             <div class="colors-image flex justify-center items-center flex-1 text-gray-400">
@@ -42,9 +42,13 @@
                   <PlainInput name="y2" type="number" />
                 </div>
               </div>
-              <div class="pt-4">
+              <div class="pt-4 w-1/2">
                 <span class="font-light underline underline-offset-2">Transformation:</span>
-                <SelectInput class="mt-2" />
+                <SelectInput
+                  class="mt-2"
+                  :default-value="'rectangle_move'"
+                  :options="['rectangle_move']"
+                />
               </div>
               <div class="flex flex-row justify-start gap-10 pt-4">
                 <div class="flex flex-row justify-start gap-4">
@@ -57,7 +61,7 @@
                 </div>
               </div>
               <div class="pt-4">
-                <ActionButton text="Submit" type="submit" />
+                <ActionButton text="Apply" type="submit" class="w-full" />
               </div>
             </VeeForm>
           </div>
