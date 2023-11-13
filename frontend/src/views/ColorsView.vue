@@ -6,14 +6,14 @@
       :transparentHeader="visibleModal.length > 0"
     >
       <template #content>
-        <div class="flex flex-row justify-center items-start w-full gap-4">
+        <div class="flex flex-row justify-center items-center w-full gap-4">
           <ProgramMenu @onBackClick="goBack" @onLinkClick="onLinkClick" />
           <div class="w-full flex justify-start items-center pt-3 h-full">
             <div class="colors-image flex justify-center items-center flex-1 text-gray-400">
               <img
                 :src="imageBase64"
                 alt="Selected file will appear here:)"
-                class="w-full h-full object-contain overflow-scroll"
+                class="w-full h-full object-contain overflow-auto"
               />
             </div>
             <VeeForm
