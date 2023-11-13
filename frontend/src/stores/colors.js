@@ -21,5 +21,8 @@ export default defineStore('colors', {
       });
       this.imageBase64 = res.data.image;
     },
+    changeImageBase64(base64) {
+      this.imageBase64 = base64;
+    },
   },
 });
