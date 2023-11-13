@@ -18,7 +18,7 @@
             </p>
           </div>
           <div class="flex flex-row justify-start items-center gap-10">
-            <TextButton text="Color Scheme" maxSymbols="21" />
+            <TextButton text="Color Scheme" maxSymbols="21" @click="onColorsClick" />
             <p class="text-xl">
               {{ '-->' }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This lab is about implementing design
               and some math stuff
@@ -53,6 +53,9 @@ export default {
   methods: {
     onFractalsClick() {
       this.$router.push('/fractals');
+    },
+    onColorsClick() {
+      this.$router.push('/colors');
     },
   },
 };
