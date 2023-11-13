@@ -11,7 +11,7 @@
           <div class="w-full flex justify-start items-center pt-3 h-full">
             <div class="colors-image flex justify-center items-center flex-1 text-gray-400">
               <img
-                :src="previewBase64"
+                :src="imageBase64"
                 alt="Selected file will appear here:)"
                 class="w-full h-full object-contain overflow-scroll"
               />
@@ -227,11 +227,6 @@ export default {
   computed: {
     ...mapState(useColorsStore, ['imageBase64']),
   },
-  watch: {
-    imageBase64(e) {
-      this.previewBase64 = e;
-    },
-  },
   methods: {
     changeSaturation(value) {
       this.saturation = value;
@@ -263,7 +258,8 @@ export default {
     },
     async changeFile(event) {
       this.file = event.target.files[0];
-      this.previewBase64 = await this.toBase64(this.file);
+      const previewBase64 = await this.toBase64(this.file);
+      this.changeImageBase64(previewBase64);
     },
     toBase64(file) {
       return new Promise((resolve, reject) => {
@@ -288,7 +284,7 @@ export default {
     onCloseClick() {
       this.visibleModal = '';
     },
-    ...mapActions(useColorsStore, ['sendImageWithChanges']),
+    ...mapActions(useColorsStore, ['sendImageWithChanges', 'changeImageBase64']),
   },
 };
 </script>
