@@ -25,7 +25,7 @@
             </p>
           </div>
           <div class="flex flex-row justify-start items-center gap-10">
-            <TextButton text="Rectangle Move" maxSymbols="21" />
+            <TextButton text="Rectangle Move" maxSymbols="21" @click="onAphineClick" />
             <p class="text-xl">
               {{ '-->' }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This lab is about implementive aphine
               movements
@@ -56,6 +56,9 @@ export default {
     },
     onColorsClick() {
       this.$router.push('/colors');
+    },
+    onAphineClick() {
+      this.$router.push('/aphine');
     },
   },
 };
