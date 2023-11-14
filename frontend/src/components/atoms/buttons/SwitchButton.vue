@@ -14,9 +14,20 @@
     <button
       type="button"
       :class="
+        this.selectedVariant === 'rgb'
+          ? 'rounded-md bg-primary w-20 text-white p-2 z-10 -mr-1 -ml-1'
+          : 'p-2 border border-solid border-stroke w-20 bg-white z-5'
+      "
+      @click="onRgbClick"
+    >
+      RGB
+    </button>
+    <button
+      type="button"
+      :class="
         this.selectedVariant === 'cmyk'
           ? 'rounded-md bg-primary w-20 text-white -ml-1 p-2 z-10'
-          : 'p-2 rounded-tr-md rounded-br-md border border-solid border-stroke w-20 bg-white z-5'
+          : 'p-2 rounded-tr-md rounded-br-md border border-l-0 border-solid border-stroke w-20 bg-white z-5 '
       "
       @click="onCmykClick"
     >
@@ -30,8 +41,8 @@ export default {
   props: ['value'],
   data() {
     return {
-      variants: ['hsv', 'cmyk'],
-      selectedVariant: this.value ? this.value : 'hsv',
+      variants: ['hsv', 'cmyk', 'rgb'],
+      selectedVariant: this.value ? this.value : 'rgb',
     };
   },
   watch: {
@@ -46,6 +57,10 @@ export default {
     },
     onCmykClick() {
       this.selectedVariant = this.variants[1];
+      this.$emit('schemeChange', this.selectedVariant);
+    },
+    onRgbClick() {
+      this.selectedVariant = this.variants[2];
       this.$emit('schemeChange', this.selectedVariant);
     },
   },
