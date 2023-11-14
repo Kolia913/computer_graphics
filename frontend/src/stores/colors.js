@@ -6,6 +6,7 @@ const API_URL = import.meta.env.VITE_BASE_API;
 export default defineStore('colors', {
   state: () => ({
     imageBase64: '',
+    pixel_conversions: {},
   }),
   actions: {
     async sendImageWithChanges({ x1, x2, y1, y2, scheme, lightness, saturation, file }) {
@@ -26,6 +27,7 @@ export default defineStore('colors', {
       data.append('document', blob);
       const res = await axios.post(`${API_URL}api/colors/change_color_model`, data);
       this.imageBase64 = res.data.image;
+      this.pixel_conversions = res.data.pixel_conversion;
     },
     changeImageBase64(base64) {
       this.imageBase64 = base64;

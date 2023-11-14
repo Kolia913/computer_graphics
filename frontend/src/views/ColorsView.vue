@@ -9,12 +9,25 @@
         <div class="flex flex-row justify-center items-center w-full gap-4">
           <ProgramMenu @onBackClick="goBack" @onLinkClick="onLinkClick" />
           <div class="w-full flex justify-start items-center pt-3 h-full">
-            <div class="colors-image flex justify-center items-center flex-1 text-gray-400">
+            <div
+              class="colors-image flex flex-col justify-center items-center flex-1 text-gray-400"
+            >
               <img
                 :src="imageBase64"
                 alt="Selected file will appear here:)"
                 class="w-full h-full object-contain overflow-auto"
               />
+              <div
+                v-if="pixel_conversions.rgb && pixel_conversions.converted"
+                class="flex flex-row justify-center items-center gap-2"
+              >
+                <span class="text-base underline underline-offset-4 text-black"
+                  >{{ pixel_conversions.rgb }} -></span
+                >
+                <span class="tetx-base underline underline-offset-4 text-black">{{
+                  pixel_conversions.converted
+                }}</span>
+              </div>
             </div>
             <VeeForm
               class="felx flex-col justify-start items-center gap-y-4 w-1/4 flex-1/4"
@@ -225,7 +238,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useColorsStore, ['imageBase64']),
+    ...mapState(useColorsStore, ['imageBase64', 'pixel_conversions']),
   },
   methods: {
     changeSaturation(value) {
