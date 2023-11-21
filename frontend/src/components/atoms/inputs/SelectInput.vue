@@ -1,31 +1,32 @@
 <template>
   <v-select
     class="select w-full bg-white"
-    :options="options"
+    :options="props.options"
     @option:selected="onChange"
     v-model="value"
   />
 </template>
-<script>
-export default {
-  name: 'FormSelect',
-  props: ['options', 'defaultValue'],
-  data() {
-    return {
-      value: '',
-    };
+<script setup>
+import { ref, watch } from 'vue';
+
+const props = defineProps(['options', 'defaultValue']);
+const emit = defineEmits(['onChange']);
+
+const value = ref('');
+
+watch(
+  () => props.defaultValue,
+  (val) => {
+    console.log(val);
+    value.value = val;
   },
-  watch: {
-    defaultValue(e) {
-      this.value = e;
-    },
-  },
-  methods: {
-    onChange(e) {
-      this.$emit('onChange', e);
-    },
-  },
-};
+  {
+    immediate: true,
+  }
+);
+function onChange(e) {
+  emit('onChange', e);
+}
 </script>
 <style scoped>
 .select {

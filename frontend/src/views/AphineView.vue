@@ -11,7 +11,7 @@
           <div class="w-full flex justify-start items-center pt-3 h-full">
             <div class="colors-image flex justify-center items-center flex-1 text-gray-400">
               <img
-                src="../assets/images/aphine.png"
+                :src="aphineChart"
                 alt="Selected file will appear here:)"
                 class="w-full h-full object-contain overflow-auto"
               />
@@ -44,20 +44,37 @@
               </div>
               <div class="pt-4 w-1/2">
                 <span class="font-light underline underline-offset-2">Transformation:</span>
-                <SelectInput
-                  class="mt-2"
-                  :default-value="'rectangle_move'"
-                  :options="['rectangle_move']"
-                />
+              </div>
+              <div class="flex flex-col justify-start gap-10 pt-4">
+                <div class="flex flex-row justify-between gap-2 flex-wrap">
+                  <span>Shift top: </span>
+                  <PlainInput name="move_top" type="number" />
+                </div>
+                <div class="flex flex-row justify-between gap-2 flex-wrap">
+                  <span>Shift right: </span>
+                  <PlainInput name="move_right" type="number" />
+                </div>
+              </div>
+              <div class="pt-4 w-1/2">
+                <span class="font-light underline underline-offset-2">Scale:</span>
               </div>
               <div class="flex flex-row justify-start gap-10 pt-4">
                 <div class="flex flex-row justify-start gap-4">
-                  <span class="w-4">X: </span>
-                  <PlainInput name="x2" type="number" />
+                  <span class="w-4">A: </span>
+                  <PlainInput name="scale_a" type="number" />
                 </div>
                 <div class="flex flex-row justify-start gap-4">
-                  <span class="w-4">Y: </span>
-                  <PlainInput name="y2" type="number" />
+                  <span class="w-4">D: </span>
+                  <PlainInput name="scale_d" type="number" />
+                </div>
+              </div>
+              <div class="pt-4 w-1/2">
+                <span class="font-light underline underline-offset-2">Rotation:</span>
+              </div>
+              <div class="flex flex-col justify-start gap-10 pt-4">
+                <div class="flex flex-row justify-between gap-2 flex-wrap">
+                  <span class="w-6">Angle: </span>
+                  <PlainInput name="rotation" type="number" />
                 </div>
               </div>
               <div class="pt-4">
@@ -112,7 +129,6 @@ import ProgramWindow from '../components/general/windows/ProgramWindow.vue';
 import { mapActions, mapState } from 'pinia';
 import useAphineStore from '../stores/aphine';
 import { useToast } from 'vue-toastification';
-import SelectInput from '../components/atoms/inputs/SelectInput.vue';
 
 const toast = useToast();
 
@@ -126,7 +142,6 @@ export default {
     ReadingList,
     ActionButton,
     PlainInput,
-    SelectInput,
   },
   data() {
     return {
@@ -135,13 +150,22 @@ export default {
         y1: 0,
         x2: 0,
         y2: 0,
+        move_top: 0,
+        move_right: 0,
+        scale_a: 0,
+        scale_d: 0,
+        rotation: 0,
       },
       validations: {
-        x1: 'required|min_value:0',
-        x2: 'required|min_value:0',
-        y1: 'required|min_value:0',
-        y2: 'required|min_value:0',
-        // file: 'required',
+        x1: 'required',
+        x2: 'required',
+        y1: 'required',
+        y2: 'required',
+        move_top: 'required',
+        move_right: 'required',
+        scale_a: 'required',
+        scale_d: 'required',
+        rotation: 'required',
       },
       visibleModal: '',
       options: [],
@@ -206,12 +230,22 @@ export default {
       },
     };
   },
-  computed: {},
+  computed: {
+    ...mapState(useAphineStore, ['aphineChart']),
+  },
   methods: {
     changeScheme(value) {
       this.colorScheme = value;
     },
-    onSubmit(values) {},
+    onSubmit(values) {
+      this.getAphineChart({ ...values })
+        .then(() => {
+          toast.success('Congrats!');
+        })
+        .catch((err) => {
+          toast.error(err.response.data.error.message);
+        });
+    },
 
     goBack() {
       this.$router.back();
@@ -222,6 +256,7 @@ export default {
     onCloseClick() {
       this.visibleModal = '';
     },
+    ...mapActions(useAphineStore, ['getAphineChart']),
   },
 };
 </script>
