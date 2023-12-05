@@ -22,7 +22,7 @@ export default defineStore('fractals', {
     },
 
     async getMandlebrot({ max_iterations, zoom_percentage, color_map, save_to_file }) {
-      const res = await axios.post(`${API_URL}api/mandelbrot`, {
+      const res = await axios.post(`${API_URL}api/fractals/mandelbrot`, {
         max_iterations,
         zoom_percentage,
         color_map,
@@ -33,7 +33,7 @@ export default defineStore('fractals', {
     },
 
     async getJulia({ max_iterations, zoom_percentage, color_map, c_real, c_imag, save_to_file }) {
-      const res = await axios.post(`${API_URL}api/julia`, {
+      const res = await axios.post(`${API_URL}api/fractals/julia`, {
         max_iterations,
         zoom_percentage,
         color_map,
@@ -46,7 +46,7 @@ export default defineStore('fractals', {
     },
 
     async getVicsek({ levels }) {
-      const res = await axios.post(`${API_URL}api/vicsek`, {
+      const res = await axios.post(`${API_URL}api/fractals/vicsek`, {
         levels,
       });
 
