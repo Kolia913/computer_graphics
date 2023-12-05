@@ -171,12 +171,12 @@ export default {
       options: [],
       modalsContent: {
         assignmentIfno: {
-          name: 'Lab 4. Build Aphine moves for Lab 4',
-          goal: 'To have the best fractal at the world   ',
+          name: 'Lab 4. Build Affine moves for Lab 4',
+          goal: 'To have the best affine moves at the world   ',
           stepList: [
             'Build frontend',
             'Build backend',
-            'Vizualize fractal',
+            'Vizualize affine transforms.',
             'Prepare the best report',
             'Get max mark',
           ],
@@ -188,22 +188,19 @@ export default {
           text3: 'Please select the link you want to open:',
           links: [
             {
-              title: 'Fractals',
-              url: '#',
-              description:
-                'This page contains general data what fractals are and where can them be useful.',
+              title: 'Affine Transformation',
+              url: 'https://www.machinelearningplus.com/linear-algebra/affine-transformation/',
+              description: 'A Comprehensive Guide on Affine Transformation in Linear Algebra',
             },
             {
-              title: 'Math',
-              url: '#',
-              description:
-                'This page contains data about basic math knowledge required to understand what is going on here',
+              title: 'Affine Transformation 2.0',
+              url: 'https://www.mathworks.com/discovery/affine-transformation.html',
+              description: 'What Is an Affine Transformation?',
             },
             {
-              title: 'Code',
-              url: '#',
-              description:
-                'This page contains data about technologies used to build such a great fractal :)',
+              title: 'Affine Transformation 3.0',
+              url: 'https://www.mathworks.com/discovery/affine-transformation.html',
+              description: 'Illustrates the different affine transformations',
             },
           ],
         },
@@ -214,16 +211,16 @@ export default {
           text3: 'Please select the link you want to open:',
           links: [
             {
-              title: 'Intro to Computer Graphics',
-              url: '#',
+              title: '3x3 Image Transformations',
+              url: 'https://youtu.be/B8kMB6Hv2eI?si=YzlQggalfWqX78dl',
             },
             {
-              title: 'Intro to Fractals Theory',
-              url: '#',
+              title: 'What are affine transformations?',
+              url: 'https://youtu.be/E3Phj6J287o?si=SX2LBeOjDmfRQeBl',
             },
             {
-              title: 'Intro to Fractals Vizualization',
-              url: '#',
+              title: 'Affine transformations in 5 minutes',
+              url: 'https://youtu.be/AheaTd_l5Is?si=aihLQJekkTJKW24_',
             },
           ],
         },

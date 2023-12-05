@@ -230,22 +230,19 @@ export default {
           text3: 'Please select the link you want to open:',
           links: [
             {
-              title: 'Fractals',
-              url: '#',
-              description:
-                'This page contains general data what fractals are and where can them be useful.',
+              title: 'Julia',
+              url: 'https://fractalsaco.weebly.com/julia-set.html',
+              description: 'JULIA SET',
             },
             {
-              title: 'Math',
-              url: '#',
-              description:
-                'This page contains data about basic math knowledge required to understand what is going on here',
+              title: 'Mandelbrot',
+              url: 'https://plus.maths.org/content/what-mandelbrot-set',
+              description: 'What is the Mandelbrot set?',
             },
             {
-              title: 'Code',
-              url: '#',
-              description:
-                'This page contains data about technologies used to build such a great fractal :)',
+              title: 'What is C',
+              url: 'https://math.stackexchange.com/questions/177256/what-is-c-in-mandelbrot-set',
+              description: 'what is 𝑐 in Mandelbrot set?',
             },
           ],
         },
@@ -256,16 +253,16 @@ export default {
           text3: 'Please select the link you want to open:',
           links: [
             {
-              title: 'Intro to Computer Graphics',
-              url: '#',
+              title: 'The Mandelbrot Set',
+              url: 'https://www.youtube.com/watch?v=2JUAojvFpCo',
             },
             {
-              title: 'Intro to Fractals Theory',
-              url: '#',
+              title: 'Understanding the Julia set',
+              url: 'https://www.youtube.com/watch?v=Cnd_cVdwkk0',
             },
             {
-              title: 'Intro to Fractals Vizualization',
-              url: '#',
+              title: 'Fractales: Fractal de Vicsek',
+              url: 'https://www.youtube.com/watch?v=YGoJUTpEF6Y',
             },
           ],
         },
