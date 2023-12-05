@@ -46,6 +46,9 @@ export default {
     onCloseClick() {
       this.$emit('onCloseClick');
     },
+    onLinkClick(url) {
+      window.open(url, '_blank');
+    },
   },
 };
 </script>

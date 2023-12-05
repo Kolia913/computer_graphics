@@ -92,7 +92,7 @@
     </ProgramWindow>
   </div>
   <div
-    class="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center"
+    class="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center z-20"
     v-if="visibleModal.length > 0"
   >
     <AssignmentList
@@ -179,11 +179,11 @@ export default {
       modalsContent: {
         assignmentIfno: {
           name: 'Lab 3. Build color schemes for Lab 3',
-          goal: 'To have the best fractal at the world   ',
+          goal: 'To have the best color schemes at the world   ',
           stepList: [
             'Build frontend',
             'Build backend',
-            'Vizualize fractal',
+            'Show color schemes change',
             'Prepare the best report',
             'Get max mark',
           ],
@@ -195,22 +195,14 @@ export default {
           text3: 'Please select the link you want to open:',
           links: [
             {
-              title: 'Fractals',
-              url: '#',
-              description:
-                'This page contains general data what fractals are and where can them be useful.',
+              title: 'Saturation',
+              url: 'https://learn.foundry.com/nuke/11.2/content/comp_environment/color_correction/making_hsv_corrections.html',
+              description: 'How does saturation works?',
             },
             {
-              title: 'Math',
-              url: '#',
-              description:
-                'This page contains data about basic math knowledge required to understand what is going on here',
-            },
-            {
-              title: 'Code',
-              url: '#',
-              description:
-                'This page contains data about technologies used to build such a great fractal :)',
+              title: 'Brightness',
+              url: 'https://learn.foundry.com/nuke/11.2/content/comp_environment/color_correction/making_hsv_corrections.html',
+              description: 'How does brightess works?',
             },
           ],
         },
@@ -221,16 +213,12 @@ export default {
           text3: 'Please select the link you want to open:',
           links: [
             {
-              title: 'Intro to Computer Graphics',
-              url: '#',
+              title: 'What is HSV',
+              url: 'https://youtu.be/2VVY-kgfRSc?si=iuxCMXKpN6-31lCr',
             },
             {
-              title: 'Intro to Fractals Theory',
-              url: '#',
-            },
-            {
-              title: 'Intro to Fractals Vizualization',
-              url: '#',
+              title: 'What are the differemt color models?',
+              url: 'https://youtu.be/cKaRxd6tdHY?si=RS__efiCwWvyQQrT',
             },
           ],
         },
